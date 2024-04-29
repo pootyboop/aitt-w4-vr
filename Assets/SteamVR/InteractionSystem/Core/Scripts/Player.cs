@@ -295,17 +295,17 @@ namespace Valve.VR.InteractionSystem
             if (SteamVR.initializedState != SteamVR.InitializedStates.InitializeSuccess)
                 return;
 
-            if (headsetOnHead != null)
-            {
-                if (headsetOnHead.GetStateDown(SteamVR_Input_Sources.Head))
-                {
-                    Debug.Log("<b>SteamVR Interaction System</b> Headset placed on head");
-                }
-                else if (headsetOnHead.GetStateUp(SteamVR_Input_Sources.Head))
-                {
-                    Debug.Log("<b>SteamVR Interaction System</b> Headset removed");
-                }
-            }
+            //if (headsetOnHead != null)
+            //{
+            //    if (headsetOnHead.GetStateDown(SteamVR_Input_Sources.Head))
+            //    {
+            //        Debug.Log("<b>SteamVR Interaction System</b> Headset placed on head");
+            //    }
+            //    else if (headsetOnHead.GetStateUp(SteamVR_Input_Sources.Head))
+            //    {
+            //        Debug.Log("<b>SteamVR Interaction System</b> Headset removed");
+            //    }
+            //}
         }
 
 		//-------------------------------------------------
