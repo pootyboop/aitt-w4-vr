@@ -50,6 +50,15 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/offroadTeleport",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/default/in/Locomotion",
+      "type": "vector2"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
