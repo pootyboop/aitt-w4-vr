@@ -52,6 +52,9 @@ MonoBehaviour:
     actionPath: /actions/default/in/Locomotion
     needsReinit: 0
   cam: {fileID: 6600185113343842737}
+  moveSpeed: 300
+  groundedWeight: 1
+  useUngroundedTimer: 0
 --- !u!54 &8745070259321619578
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -91,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be59d7d033a5ab4a8b01e6496001e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 1
   rotateTowardSource: 1
   rotateTowardSourceSpeed: 4
 --- !u!136 &1682270158918770473
@@ -100,7 +104,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392630722993190946}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d5efd903ffb5b694f99aa21f4d829eac, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -192,9 +196,45 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11489144, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: hapticFlash.actionPath
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489144, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: hapticFlash.needsReinit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494192, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: hapticFlash.actionPath
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494192, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: hapticFlash.needsReinit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 13693334, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010547881750, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: fadeScreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010547881750, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: playerMvmt
+      value: 
+      objectReference: {fileID: 8223859728152102031}
+    - target: {fileID: 114000010547881750, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: showTurnAnimation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010547881750, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: additionalOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010547881750, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: canTurnEverySeconds
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 114000010591715100, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: clearanceCheckMask.m_Bits

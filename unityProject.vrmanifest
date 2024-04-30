@@ -5,10 +5,10 @@
       "app_key": "application.generated.unity.vrtemplate.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\aitt-w4-vr\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\manne\\OneDrive\\Documents\\AITT\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
-          "name": "VRTemplate [Testing]"
+          "name": "AITT Assessment [Testing]"
         }
       }
     }

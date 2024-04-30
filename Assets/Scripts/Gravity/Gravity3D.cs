@@ -11,6 +11,7 @@ public class Gravity3D : MonoBehaviour
     private bool parentedOnPlanet = false;
     Transform currGravitySource;
     float currGravityStrength = 1.0f;
+    public float weight = 1.0f;
 
     public bool rotateTowardSource = false;
     public float rotateTowardSourceSpeed = 3f;
@@ -66,8 +67,8 @@ public class Gravity3D : MonoBehaviour
     {
         Vector3 directionToSource = getDirectionToSource();
 
-        Vector3 force = directionToSource * currGravityStrength;
-        rb.AddForce(force * rb.mass);
+        Vector3 force = directionToSource * currGravityStrength * rb.mass * weight;
+        rb.AddForce(force);
 
         if (rotateTowardSource)
         {
@@ -76,7 +77,7 @@ public class Gravity3D : MonoBehaviour
             //
 
             Quaternion orientationDirection = Quaternion.FromToRotation(-transform.up, directionToSource) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.fixedDeltaTime);
             //Vector3 feetToSource = Vector3.Lerp(directionToSource * -1f, transform.up, .5f);
             //transform.Rotate(directionToSource);
         }
@@ -85,7 +86,11 @@ public class Gravity3D : MonoBehaviour
 
     public Vector3 getDirectionToSource()
     {
-        return (currGravitySource.position - transform.position).normalized;
+        if (currGravitySource != null) {
+            return (currGravitySource.position - transform.position).normalized;
+        }
+
+        return Vector3.zero;
     }
 
 }

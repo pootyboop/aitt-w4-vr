@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "aitt-w4-vr.sln"
+    "dotnet.defaultSolution": "aitt-w4-vr.sln",
+    "dotnet.preferCSharpExtension": true
 }

@@ -10,6 +10,7 @@ namespace Valve.VR.InteractionSystem
     //-----------------------------------------------------------------------------
     public class SnapTurn : MonoBehaviour
     {
+        public Transform playerMvmt;
         public float snapAngle = 90.0f;
 
         public bool showTurnAnimation = true;
@@ -96,6 +97,8 @@ namespace Valve.VR.InteractionSystem
         private Coroutine rotateCoroutine;
         public void RotatePlayer(float angle)
         {
+            playerMvmt.Rotate(playerMvmt.up, angle, Space.Self);
+            /*
             if (rotateCoroutine != null)
             {
                 StopCoroutine(rotateCoroutine);
@@ -103,6 +106,7 @@ namespace Valve.VR.InteractionSystem
             }
 
             rotateCoroutine = StartCoroutine(DoRotatePlayer(angle));
+            */
         }
 
         //-----------------------------------------------------
@@ -126,11 +130,13 @@ namespace Valve.VR.InteractionSystem
 
             yield return new WaitForSeconds(fadeTime);
 
-            Vector3 playerFeetOffset = player.trackingOriginTransform.position - player.feetPositionGuess;
-            player.trackingOriginTransform.position -= playerFeetOffset;
-            player.transform.Rotate(Vector3.up, angle);
-            playerFeetOffset = Quaternion.Euler(0.0f, angle, 0.0f) * playerFeetOffset;
-            player.trackingOriginTransform.position += playerFeetOffset;
+            //Vector3 playerFeetOffset = player.trackingOriginTransform.position - player.feetPositionGuess;
+            //player.trackingOriginTransform.position -= playerFeetOffset;
+
+            //player.transform.Rotate(Vector3.up, angle);
+            playerMvmt.Rotate(playerMvmt.up, angle, Space.Self);
+            //playerFeetOffset = Quaternion.Euler(0.0f, angle, 0.0f) * playerFeetOffset;
+            //player.trackingOriginTransform.position += playerFeetOffset;
 
             GameObject fx = angle > 0 ? rotateRightFX : rotateLeftFX;
 
@@ -148,7 +154,7 @@ namespace Valve.VR.InteractionSystem
             while (Time.time <= endTime)
             {
                 yield return null;
-                UpdateOrientation(fx);
+                //UpdateOrientation(fx);
             };
 
             fx.SetActive(false);
