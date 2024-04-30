@@ -269,15 +269,15 @@ namespace Valve.VR.InteractionSystem
 
             float energy = collision.relativeVelocity.magnitude;
 
-            if(energy > minCollisionEnergy && Time.time - lastCollisionHapticsTime > minCollisionHapticsTime)
-            {
-                lastCollisionHapticsTime = Time.time;
+            //if(energy > minCollisionEnergy && Time.time - lastCollisionHapticsTime > minCollisionHapticsTime)
+            //{
+            //    lastCollisionHapticsTime = Time.time;
 
-                float intensity = Util.RemapNumber(energy, minCollisionEnergy, maxCollisionEnergy, 0.3f, 1.0f);
-                float length = Util.RemapNumber(energy, minCollisionEnergy, maxCollisionEnergy, 0.0f, 0.06f);
+            //    float intensity = Util.RemapNumber(energy, minCollisionEnergy, maxCollisionEnergy, 0.3f, 1.0f);
+            //    float length = Util.RemapNumber(energy, minCollisionEnergy, maxCollisionEnergy, 0.0f, 0.06f);
 
-                hand.hand.TriggerHapticPulse(length, 100, intensity);
-            }
+            //    hand.hand.TriggerHapticPulse(length, 100, intensity);
+            //}
         }
 
     }

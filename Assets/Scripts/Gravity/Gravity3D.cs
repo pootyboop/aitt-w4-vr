@@ -59,6 +59,7 @@ public class Gravity3D : MonoBehaviour
     private void FixedUpdate()
     {
         AddForceTowardSource();
+        RotateTowardSource();
     }
 
 
@@ -69,17 +70,23 @@ public class Gravity3D : MonoBehaviour
 
         Vector3 force = directionToSource * currGravityStrength * rb.mass * weight;
         rb.AddForce(force);
+    }
 
+
+
+    public void RotateTowardSource()
+    {
         if (rotateTowardSource)
         {
+            Vector3 directionToSource = getDirectionToSource();
+
             //
             //https://www.youtube.com/watch?v=v4gkheo0dt8
             //
 
             Quaternion orientationDirection = Quaternion.FromToRotation(-transform.up, directionToSource) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.fixedDeltaTime);
-            //Vector3 feetToSource = Vector3.Lerp(directionToSource * -1f, transform.up, .5f);
-            //transform.Rotate(directionToSource);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.fixedDeltaTime);
+            transform.rotation = orientationDirection;
         }
     }
 

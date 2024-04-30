@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Valve.VR;
 
 public class PlayerMvmt : MonoBehaviour
 {
     //=========REFS=========
     public static PlayerMvmt instance;
-    public SteamVR_Action_Vector2 action;
+    public SteamVR_Action_Vector2 mvmtAction, snapTurnAction;
     public Transform cam;
     Rigidbody rb;
     Gravity3D gravity;
@@ -19,11 +20,15 @@ public class PlayerMvmt : MonoBehaviour
     public float groundedWeight = 5.0f;
     float ungroundedTimerTime = 0.2f;
     public bool useUngroundedTimer = false;
+    float snapTurnAngle = 45f;
+    float snapTurnDeadZone = 0.2f;
+    float canTurnEverySeconds = 0.5f;
     //======================
 
     //========STATE=========
     Vector3 desiredMvmtInput;
     bool isGrounded = false;
+    public static float teleportLastActiveTime = 0.0f;
     //======================
 
 
@@ -36,8 +41,24 @@ public class PlayerMvmt : MonoBehaviour
     }
 
 
+
+    private void Update()
+    {
+
+    }
+
+
     private void FixedUpdate()
     {
+        //limit snap turns
+        if (Time.time >= (teleportLastActiveTime + canTurnEverySeconds))
+        {
+            if (Mathf.Abs(snapTurnAction.axis.x) > snapTurnDeadZone)
+            {
+                Turn(snapTurnAction.axis.x > 0.0f);
+            }
+        }
+
         Move();
     }
 
@@ -50,13 +71,29 @@ public class PlayerMvmt : MonoBehaviour
             return;
         }
 
-        desiredMvmtInput = new Vector3(action.axis.x, 0f, action.axis.y).normalized;
+        desiredMvmtInput = new Vector3(mvmtAction.axis.x, 0f, mvmtAction.axis.y).normalized;
         Vector3 move = Vector3.zero;
 
         if (desiredMvmtInput != Vector3.zero) {
             move = (desiredMvmtInput.z * transform.forward + desiredMvmtInput.x * transform.right) * Time.fixedDeltaTime * moveSpeed;
         }
             rb.velocity = move;
+    }
+
+
+
+    void Turn(bool isRight)
+    {
+        float angle = snapTurnAngle;
+        if (isRight)
+        {
+            angle = -angle;
+        }
+
+        //transform.Rotate(transform.up, angle, Space.Self);
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + angle, transform.localEulerAngles.z);
+
+        teleportLastActiveTime = Time.time;
     }
 
     private void OnCollisionEnter(Collision other) {
