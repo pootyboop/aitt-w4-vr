@@ -85,8 +85,8 @@ public class Gravity3D : MonoBehaviour
             //
 
             Quaternion orientationDirection = Quaternion.FromToRotation(-transform.up, directionToSource) * transform.rotation;
-            //transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.fixedDeltaTime);
-            transform.rotation = orientationDirection;
+            transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.fixedDeltaTime);
+            //transform.rotation = orientationDirection;
         }
     }
 
