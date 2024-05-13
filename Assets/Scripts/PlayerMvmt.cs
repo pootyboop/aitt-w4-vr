@@ -23,6 +23,8 @@ public class PlayerMvmt : MonoBehaviour
     float snapTurnAngle = 45f;
     float snapTurnDeadZone = 0.2f;
     float canTurnEverySeconds = 0.5f;
+    public bool airControl = false;
+    public float maxVelocity = 500f;
     //======================
 
     //========STATE=========
@@ -60,24 +62,30 @@ public class PlayerMvmt : MonoBehaviour
         }
 
         Move();
+        CapSpeed();
     }
 
 
 
     void Move()
     {
-        //no air control
-        if (!isGrounded) {
+        //air control
+        if (!isGrounded && !airControl) {
             return;
         }
+        
 
         desiredMvmtInput = new Vector3(mvmtAction.axis.x, 0f, mvmtAction.axis.y).normalized;
+
         Vector3 move = Vector3.zero;
 
         if (desiredMvmtInput != Vector3.zero) {
-            move = (desiredMvmtInput.z * transform.forward + desiredMvmtInput.x * transform.right) * Time.fixedDeltaTime * moveSpeed;
+            move = (desiredMvmtInput.z * cam.transform.forward + desiredMvmtInput.x * cam.transform.right).normalized * Time.fixedDeltaTime * moveSpeed;
         }
-            rb.velocity = move;
+
+        rb.AddForce(move);
+
+        //rb.velocity = move;
     }
 
 
@@ -94,6 +102,12 @@ public class PlayerMvmt : MonoBehaviour
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + angle, transform.localEulerAngles.z);
 
         teleportLastActiveTime = Time.time;
+    }
+
+    void CapSpeed() {
+        if (rb.velocity.magnitude > maxVelocity) {
+            rb.velocity = rb.velocity.normalized * maxVelocity;
+        }
     }
 
     private void OnCollisionEnter(Collision other) {
