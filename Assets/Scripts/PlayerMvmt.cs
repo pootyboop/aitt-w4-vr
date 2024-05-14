@@ -92,8 +92,6 @@ public class PlayerMvmt : MonoBehaviour
         }
 
         rb.AddForce(move);
-
-        //rb.velocity = move;
     }
 
 
@@ -106,8 +104,9 @@ public class PlayerMvmt : MonoBehaviour
             angle = -angle;
         }
 
-        //transform.Rotate(transform.up, angle, Space.Self);
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + angle, transform.localEulerAngles.z);
+        transform.Rotate(transform.up, angle, Space.Self);
+        //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + angle, transform.localEulerAngles.z);
+        //transform.eulerAngles = new Vector3 (0, 0, 0);
 
         teleportLastActiveTime = Time.time;
     }
