@@ -51,7 +51,6 @@ public class Gravity3D : MonoBehaviour
         }
 
         parentedOnPlanet = true;
-
         transform.SetParent(currGravitySource);
     }
 
@@ -66,7 +65,7 @@ public class Gravity3D : MonoBehaviour
     
     void AddForceTowardSource()
     {
-        Vector3 directionToSource = getDirectionToSource();
+        Vector3 directionToSource = GetDirectionToSource();
 
         Vector3 force = directionToSource * currGravityStrength * rb.mass * weight;
         rb.AddForce(force);
@@ -78,7 +77,7 @@ public class Gravity3D : MonoBehaviour
     {
         if (rotateTowardSource)
         {
-            Vector3 directionToSource = getDirectionToSource();
+            Vector3 directionToSource = GetDirectionToSource();
 
             //
             //https://www.youtube.com/watch?v=v4gkheo0dt8
@@ -102,7 +101,7 @@ public class Gravity3D : MonoBehaviour
     }
 
 
-    public Vector3 getDirectionToSource()
+    public Vector3 GetDirectionToSource()
     {
         if (currGravitySource != null) {
             return (currGravitySource.position - transform.position).normalized;

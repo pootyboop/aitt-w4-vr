@@ -84,7 +84,7 @@ public class PlayerMvmt : MonoBehaviour
         Vector3 move = Vector3.zero;
 
         if (desiredMvmtInput != Vector3.zero) {
-            move = (desiredMvmtInput.z * cam.transform.forward + desiredMvmtInput.x * cam.transform.right).normalized * Time.fixedDeltaTime * moveSpeed;
+            move = (desiredMvmtInput.z * GetMoveForwardDir() + desiredMvmtInput.x * cam.transform.right).normalized * Time.fixedDeltaTime * moveSpeed;
         }
 
         if (rocketLAction.axis > 0.9f && rocketRAction.axis > 0.9f) {
@@ -92,6 +92,17 @@ public class PlayerMvmt : MonoBehaviour
         }
 
         rb.AddForce(move);
+    }
+
+
+
+    //project camera forward onto the gravity direction so player doesn't move differently when looking up/down
+    Vector3 GetMoveForwardDir() {
+
+        Vector3 camDir = cam.transform.forward.normalized;
+        Vector3 gravDir = gravity.GetDirectionToSource().normalized;
+
+        return camDir - Vector3.Project(camDir, gravDir);
     }
 
 
