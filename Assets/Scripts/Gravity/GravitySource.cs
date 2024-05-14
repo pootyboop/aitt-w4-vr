@@ -18,15 +18,17 @@ public class GravitySource : MonoBehaviour
     }
 
 
-/*
+
     void OnTriggerExit(Collider other)
     {
+        
         Gravity3D currGravity3D = other.gameObject.GetComponent<Gravity3D>();
         if (currGravity3D != null) {
             currGravity3D.LeftPlanetGravity();
         }
+        
     }
-*/
+
 
 
     private void OnCollisionEnter(Collision collision)

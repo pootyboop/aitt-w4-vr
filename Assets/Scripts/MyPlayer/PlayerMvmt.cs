@@ -49,7 +49,6 @@ public class PlayerMvmt : MonoBehaviour
 
     private void Update()
     {
-
     }
 
 

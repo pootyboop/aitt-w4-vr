@@ -36,9 +36,22 @@ public class Gravity3D : MonoBehaviour
 
     public void EnteredGravitySource(Transform newSource, float newStrength)
     {
-        transform.SetParent(null);
+        if (transform.parent != null) {
+            transform.SetParent(null);
+        }
         currGravitySource = newSource;
         currGravityStrength = newStrength;
+    }
+
+
+
+    public void LeftPlanetGravity() {
+        if (!parentedOnPlanet) {
+            return;
+        }
+
+        parentedOnPlanet = false;
+        transform.SetParent(null);
     }
 
 

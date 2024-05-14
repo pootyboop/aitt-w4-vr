@@ -1331,7 +1331,7 @@ GameObject:
   - component: {fileID: 708948905}
   - component: {fileID: 708948906}
   m_Layer: 0
-  m_Name: Planet
+  m_Name: Start Moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3618,7 +3618,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3949517060849487807, guid: db1375a4ca24aeb42857f88c542fa63f, type: 3}
       propertyPath: m_Name
-      value: PlanetBase
+      value: Earth
       objectReference: {fileID: 0}
     - target: {fileID: 4432756426694661381, guid: db1375a4ca24aeb42857f88c542fa63f, type: 3}
       propertyPath: m_LocalPosition.x
