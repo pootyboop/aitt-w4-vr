@@ -84,8 +84,19 @@ public class Gravity3D : MonoBehaviour
             //https://www.youtube.com/watch?v=v4gkheo0dt8
             //
 
+            float rotSpeed;
+
+            if (transform.parent == null) {
+                rotSpeed = rotateTowardSourceSpeed * Time.fixedDeltaTime;
+            }
+
+            //insta-rotate when parented to planet
+            else {
+                rotSpeed = 1.0f;
+            }
+
             Quaternion orientationDirection = Quaternion.FromToRotation(-transform.up, directionToSource) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotateTowardSourceSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotSpeed);
             //transform.rotation = orientationDirection;
         }
     }

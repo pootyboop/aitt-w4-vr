@@ -9,10 +9,12 @@ public class PlayerMvmt : MonoBehaviour
     //=========REFS=========
     public static PlayerMvmt instance;
     public SteamVR_Action_Vector2 mvmtAction, snapTurnAction;
+    public SteamVR_Action_Single rocketLAction, rocketRAction;
     public Transform cam;
     Rigidbody rb;
     Gravity3D gravity;
     IEnumerator ungroundedTimer;
+    public SteamVR_Input_Sources handTypeL, handTypeR;
     //======================
 
     //========VALUES========
@@ -20,11 +22,12 @@ public class PlayerMvmt : MonoBehaviour
     public float groundedWeight = 5.0f;
     float ungroundedTimerTime = 0.2f;
     public bool useUngroundedTimer = false;
-    float snapTurnAngle = 45f;
+    float snapTurnAngle = 60f;
     float snapTurnDeadZone = 0.2f;
     float canTurnEverySeconds = 0.5f;
     public bool airControl = false;
     public float maxVelocity = 500f;
+    public float rocketStrength = 2f;
     //======================
 
     //========STATE=========
@@ -69,6 +72,7 @@ public class PlayerMvmt : MonoBehaviour
 
     void Move()
     {
+
         //air control
         if (!isGrounded && !airControl) {
             return;
@@ -81,6 +85,10 @@ public class PlayerMvmt : MonoBehaviour
 
         if (desiredMvmtInput != Vector3.zero) {
             move = (desiredMvmtInput.z * cam.transform.forward + desiredMvmtInput.x * cam.transform.right).normalized * Time.fixedDeltaTime * moveSpeed;
+        }
+
+        if (rocketLAction.axis > 0.9f && rocketRAction.axis > 0.9f) {
+            move += transform.up * rocketStrength;
         }
 
         rb.AddForce(move);

@@ -64,6 +64,14 @@
       "requirement": "mandatory"
     },
     {
+      "name": "/actions/default/in/rocketL",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/default/in/rocketR",
+      "type": "vector1"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

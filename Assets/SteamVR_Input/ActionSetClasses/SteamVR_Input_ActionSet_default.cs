@@ -129,6 +129,22 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Single rocketL
+        {
+            get
+            {
+                return SteamVR_Actions.default_rocketL;
+            }
+        }
+        
+        public virtual SteamVR_Action_Single rocketR
+        {
+            get
+            {
+                return SteamVR_Actions.default_rocketR;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

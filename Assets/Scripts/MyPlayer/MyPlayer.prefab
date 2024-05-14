@@ -72,10 +72,21 @@ MonoBehaviour:
   snapTurnAction:
     actionPath: /actions/default/in/Turning
     needsReinit: 0
+  rocketLAction:
+    actionPath: /actions/default/in/rocketL
+    needsReinit: 0
+  rocketRAction:
+    actionPath: /actions/default/in/rocketR
+    needsReinit: 0
   cam: {fileID: 8973796810203689094}
+  handTypeL: 1
+  handTypeR: 2
   moveSpeed: 1000
   groundedWeight: 1
   useUngroundedTimer: 0
+  airControl: 1
+  maxVelocity: 3
+  rocketStrength: 20
 --- !u!54 &7237009831545968455
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -117,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 3
   rotateTowardSource: 1
-  rotateTowardSourceSpeed: 3
+  rotateTowardSourceSpeed: 1
 --- !u!136 &8420020498346064251
 CapsuleCollider:
   m_ObjectHideFlags: 0
