@@ -9,8 +9,9 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     bool grabbed = false;
     bool preGrabbedKinematic = false;
     bool justThrown = false;
+    //float minThrowStrengthToThrow = 0.02f;
+    public bool isThrowable = true;
     public float throwStrength = 20000f;
-    public float minThrowStrengthToThrow = 0.02f;
     public float maxThrowStrength = 50000f;
     Vector3 lastPos = Vector3.zero;
     Rigidbody rb;
@@ -86,7 +87,9 @@ public class GrabbableObject : MonoBehaviour, IInteractable
 
         else {
             rb.isKinematic = preGrabbedKinematic;
-            justThrown = true;
+            if (isThrowable) {
+                justThrown = true;
+            }
             StartCoroutine(DelayDroppedCollision());
         }
     }

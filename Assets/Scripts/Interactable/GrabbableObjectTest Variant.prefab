@@ -9,10 +9,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 231153218399656233, guid: 3e40b8eb3e1fb5b4d82d08e0e2fcc048, type: 3}
-      propertyPath: throwStrength
-      value: 20000
-      objectReference: {fileID: 0}
-    - target: {fileID: 231153218399656233, guid: 3e40b8eb3e1fb5b4d82d08e0e2fcc048, type: 3}
       propertyPath: minThrowStrengthToThrow
       value: 0.02
       objectReference: {fileID: 0}
