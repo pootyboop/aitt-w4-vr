@@ -15,6 +15,7 @@ public class PlayerMvmt : MonoBehaviour
     Gravity3D gravity;
     IEnumerator ungroundedTimer;
     public SteamVR_Input_Sources handTypeL, handTypeR;
+    public MyHand handL, handR;
     //======================
 
     //========VALUES========
@@ -86,11 +87,22 @@ public class PlayerMvmt : MonoBehaviour
             move = (desiredMvmtInput.z * GetMoveForwardDir() + desiredMvmtInput.x * cam.transform.right).normalized * Time.fixedDeltaTime * moveSpeed;
         }
 
-        if (rocketLAction.axis > 0.9f && rocketRAction.axis > 0.9f) {
+        if (CanRocket()) {
             move += transform.up * rocketStrength;
         }
 
         rb.AddForce(move);
+    }
+
+
+
+    bool CanRocket() {
+        return (
+            rocketLAction.axis > 0.9f &&
+            rocketRAction.axis > 0.9f /*&&
+            !handL.IsHoldingObject() &&
+            !handR.IsHoldingObject()*/
+            );
     }
 
 

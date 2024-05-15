@@ -72,6 +72,14 @@
       "type": "vector1"
     },
     {
+      "name": "/actions/default/in/grabObjectL",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/default/in/grabObjectR",
+      "type": "vector1"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

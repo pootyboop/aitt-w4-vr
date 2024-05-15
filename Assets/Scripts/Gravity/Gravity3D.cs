@@ -6,6 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Gravity3D : MonoBehaviour
 {
+    public enum ERotationType {
+        NONE,
+        ROTATETOSOURCE,
+        SNAPTOSOURCE
+    }
+
     Rigidbody rb;
     private bool useGravity = false;
     private bool parentedOnPlanet = false;
@@ -13,7 +19,7 @@ public class Gravity3D : MonoBehaviour
     float currGravityStrength = 1.0f;
     public float weight = 1.0f;
 
-    public bool rotateTowardSource = false;
+    public ERotationType rotationType = ERotationType.NONE;
     public float rotateTowardSourceSpeed = 3f;
 
     void Start()
@@ -70,8 +76,10 @@ public class Gravity3D : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AddForceTowardSource();
-        RotateTowardSource();
+        if (!rb.isKinematic && useGravity) {  //no need to run these when kinematic
+            AddForceTowardSource();
+            RotateTowardSource();
+        }
     }
 
 
@@ -88,7 +96,7 @@ public class Gravity3D : MonoBehaviour
 
     public void RotateTowardSource()
     {
-        if (rotateTowardSource)
+        if (rotationType != ERotationType.NONE)
         {
             Vector3 directionToSource = GetDirectionToSource();
 
@@ -98,7 +106,7 @@ public class Gravity3D : MonoBehaviour
 
             float rotSpeed;
 
-            if (transform.parent == null) {
+            if (transform.parent == null && rotationType == ERotationType.ROTATETOSOURCE) {
                 rotSpeed = rotateTowardSourceSpeed * Time.fixedDeltaTime;
             }
 

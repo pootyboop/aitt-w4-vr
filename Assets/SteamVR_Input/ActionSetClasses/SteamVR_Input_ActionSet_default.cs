@@ -145,6 +145,22 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Single grabObjectL
+        {
+            get
+            {
+                return SteamVR_Actions.default_grabObjectL;
+            }
+        }
+        
+        public virtual SteamVR_Action_Single grabObjectR
+        {
+            get
+            {
+                return SteamVR_Actions.default_grabObjectR;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get
