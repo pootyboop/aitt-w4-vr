@@ -13,8 +13,8 @@ public class Gravity3D : MonoBehaviour
     }
 
     Rigidbody rb;
-    private bool useGravity = false;
-    private bool parentedOnPlanet = false;
+    bool useGravity = false;
+    bool parentedOnPlanet = false;
     Transform currGravitySource;
     float currGravityStrength = 1.0f;
     public float weight = 1.0f;
@@ -33,8 +33,14 @@ public class Gravity3D : MonoBehaviour
 
         if (useGravity)
         {
-            //fires OnTriggerEnter
+            //fires OnTriggerEnter events when spawning inside a gravity source
             transform.position = new Vector3 (transform.position.x + 0.001f, transform.position.y, transform.position.z);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (!parentedOnPlanet && other.gameObject.CompareTag("PlanetCollision")) {
+            ArrivedAtSource();
         }
     }
 
@@ -45,6 +51,7 @@ public class Gravity3D : MonoBehaviour
         if (transform.parent != null) {
             transform.SetParent(null);
         }
+
         currGravitySource = newSource;
         currGravityStrength = newStrength;
     }

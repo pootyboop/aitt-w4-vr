@@ -25,7 +25,7 @@ public class BabyPlanet : MonoBehaviour
 
     public void StartGrow() {
         coll.enabled = false;
-        Planet newPlanet = Instantiate(planet, transform.position, Quaternion.identity);
+        Planet newPlanet = Instantiate(planet, transform.position, Random.rotation);
         StartCoroutine(KillAfterSeconds());
     }
 

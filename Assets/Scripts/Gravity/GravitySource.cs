@@ -31,6 +31,7 @@ public class GravitySource : MonoBehaviour
 
 
 
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         Gravity3D currGravity3D = collision.gameObject.GetComponent<Gravity3D>();
@@ -39,4 +40,5 @@ public class GravitySource : MonoBehaviour
             currGravity3D.ArrivedAtSource();
         }
     }
+    */
 }

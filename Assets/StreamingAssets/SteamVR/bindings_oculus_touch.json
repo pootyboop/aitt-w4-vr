@@ -240,7 +240,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/rocketl"
+                     "output" : "/actions/default/in/grabobjectl"
                   }
                },
                "mode" : "trigger",
@@ -249,7 +249,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/rocketr"
+                     "output" : "/actions/default/in/grabobjectr"
                   }
                },
                "mode" : "trigger",
@@ -258,7 +258,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/grabobjectl"
+                     "output" : "/actions/default/in/rocketl"
                   }
                },
                "mode" : "trigger",
@@ -267,7 +267,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/grabobjectr"
+                     "output" : "/actions/default/in/rocketr"
                   }
                },
                "mode" : "trigger",
