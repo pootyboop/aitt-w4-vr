@@ -50,15 +50,6 @@ public class GrabbableObject : MonoBehaviour, IInteractable
 
         Vector3 throwDir = transform.position - lastPos;
 
-        print(gameObject);
-        print(throwDir.magnitude + " MAGNITUDE");
-
-        /*
-        if (throwDir.magnitude < minThrowStrengthToThrow) {
-            return;
-        }
-        */
-
         Vector3 throwVector = throwDir * throwStrength;
 
         if (throwVector.magnitude > maxThrowStrength) {
@@ -66,6 +57,11 @@ public class GrabbableObject : MonoBehaviour, IInteractable
         }
 
         rb.AddForce(throwVector);
+
+        BabyPlanet maybeBabyPlanet = gameObject.GetComponent<BabyPlanet>();
+        if (maybeBabyPlanet != null) {
+            maybeBabyPlanet.OnThrown();
+        }
     }
 
     bool CanGrab() {
@@ -95,7 +91,7 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     }
 
     IEnumerator DelayDroppedCollision() {
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.2f);
         coll.enabled = true;
     }
 }

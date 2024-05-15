@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e662459b202e1740900c8d7f50b9237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isThrowable: 1
+  throwStrength: 20000
+  maxThrowStrength: 50000
 --- !u!135 &3281525135303021318
 SphereCollider:
   m_ObjectHideFlags: 0

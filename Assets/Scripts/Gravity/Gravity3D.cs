@@ -131,4 +131,41 @@ public class Gravity3D : MonoBehaviour
         return Vector3.zero;
     }
 
+
+
+    public void SetGravityActive(bool newActive) {
+        useGravity = newActive;
+        if (useGravity) {
+
+            if (currGravitySource == null) {
+                GravitySource bestGuess = BestGuessGravitySource();
+                EnteredGravitySource(bestGuess.transform, bestGuess.sourceStrength);
+            }
+
+        } else {
+            LeftPlanetGravity();
+        }
+    }
+
+    //EXPENSIVE! Only call when necessary
+    GravitySource BestGuessGravitySource() {
+        GravitySource[] allSources = FindObjectsOfType<GravitySource>();
+
+        if (allSources == null) {
+            return null;
+        }
+
+        GravitySource bestSource = allSources[0];
+
+        foreach (GravitySource source in allSources) {
+            if (
+                Vector3.Distance(source.transform.position, transform.position)
+                <
+                Vector3.Distance(bestSource.transform.position, transform.position)) {
+                    bestSource = source;
+            }
+        }
+
+        return bestSource;
+    }
 }
