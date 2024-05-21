@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isThrowable: 1
-  throwStrength: 20000
+  throwStrength: 7500
   maxThrowStrength: 50000
 --- !u!135 &3281525135303021318
 SphereCollider:

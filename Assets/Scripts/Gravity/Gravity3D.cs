@@ -15,6 +15,7 @@ public class Gravity3D : MonoBehaviour
     Rigidbody rb;
     bool useGravity = false;
     bool parentedOnPlanet = false;
+    public bool standingOnPlanet = false;
     Transform currGravitySource;
     float currGravityStrength = 1.0f;
     public float weight = 1.0f;
@@ -38,9 +39,19 @@ public class Gravity3D : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if (!parentedOnPlanet && other.gameObject.CompareTag("PlanetCollision")) {
+    private void OnCollisionEnter(Collision other)
+    {
+        if (!parentedOnPlanet && other.gameObject.CompareTag("PlanetCollision"))
+        {
             ArrivedAtSource();
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (standingOnPlanet && other.gameObject.CompareTag("PlanetCollision"))
+        {
+            standingOnPlanet = false;
         }
     }
 
@@ -77,6 +88,7 @@ public class Gravity3D : MonoBehaviour
         }
 
         parentedOnPlanet = true;
+        standingOnPlanet = true;
         transform.SetParent(currGravitySource);
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class GrabbableObject : MonoBehaviour, IInteractable
 {
+    bool isGrabbable = true;
+
     bool grabbed = false;
     bool preGrabbedKinematic = false;
     bool justThrown = false;
@@ -13,7 +15,10 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     public bool isThrowable = true;
     public float throwStrength = 20000f;
     public float maxThrowStrength = 50000f;
-    Vector3 lastPos = Vector3.zero;
+    public Vector3 lastPos = Vector3.zero;
+    Vector3[] lastPositions;
+    int lastPosIndex = -1;
+    int throwFixedFrameHistory = 5;
     Rigidbody rb;
     Collider coll;
 
@@ -24,7 +29,7 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     }
 
     public bool IsInteractable() {
-        return !grabbed;
+        return (!grabbed && isGrabbable);
     }
 
     public void SetHovered(bool newHovered) {
@@ -35,6 +40,10 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     private void Start() {
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collider>();
+
+        lastPositions = new Vector3[throwFixedFrameHistory];
+
+        SetGrabbable(isGrabbable);
     }
 
     private void FixedUpdate() {
@@ -42,13 +51,39 @@ public class GrabbableObject : MonoBehaviour, IInteractable
             Throw();
         }
 
+        UpdateLastPos();
+    }
+
+    void UpdateLastPos()
+    {
         lastPos = transform.position;
+        lastPosIndex++;
+
+        if (lastPosIndex >= throwFixedFrameHistory)
+        {
+            lastPosIndex = 0;
+        }
+
+        lastPositions[lastPosIndex] = transform.position;
+    }
+
+    Vector3 GetOldestPos()
+    {
+        int oldestPosIndex = lastPosIndex - 1;
+        if (oldestPosIndex < 0)
+        {
+            oldestPosIndex = throwFixedFrameHistory - 1;
+        }
+
+        return lastPositions[oldestPosIndex];
     }
 
     void Throw() {
         justThrown = false;
 
-        Vector3 throwDir = transform.position - lastPos;
+        Vector3 oldestPos = GetOldestPos();
+
+        Vector3 throwDir = transform.position - oldestPos;
 
         Vector3 throwVector = throwDir * throwStrength;
 
@@ -93,5 +128,19 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     IEnumerator DelayDroppedCollision() {
         yield return new WaitForSeconds(.2f);
         coll.enabled = true;
+    }
+
+    public void SetGrabbable(bool newGrabbable)
+    {
+        isGrabbable = newGrabbable;
+        if (grabbed && !isGrabbable)
+        {
+            MyHand hand = transform.parent.gameObject.GetComponent<MyHand>();
+
+            if (hand != null)
+            {
+                hand.Drop();
+            }
+        }
     }
 }

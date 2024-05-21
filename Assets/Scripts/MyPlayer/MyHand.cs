@@ -40,10 +40,10 @@ public class MyHand : MonoBehaviour
         grabbedObject.transform.localEulerAngles = Vector3.zero;
     }
 
-    void Drop() {
-        grabbedObject.transform.SetParent(null);
-
+    public void Drop() {
         grabbedObject.SetInteract(false);
+
+        grabbedObject.transform.SetParent(null);
 
         grabbedObject = null;
     }
