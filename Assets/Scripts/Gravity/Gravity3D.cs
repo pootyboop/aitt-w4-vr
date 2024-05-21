@@ -59,6 +59,10 @@ public class Gravity3D : MonoBehaviour
 
     public void EnteredGravitySource(Transform newSource, float newStrength)
     {
+        if (!useGravity) {
+            return;
+        }
+
         if (transform.parent != null) {
             transform.SetParent(null);
         }
@@ -82,6 +86,10 @@ public class Gravity3D : MonoBehaviour
 
     public void ArrivedAtSource()
     {
+        if (!useGravity) {
+            return;
+        }
+        
         if (parentedOnPlanet)
         {
             return;
