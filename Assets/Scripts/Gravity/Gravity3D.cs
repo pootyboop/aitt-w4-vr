@@ -3,30 +3,32 @@ using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
+//use with rigidbody to 3D-ify gravity using GravitySources
 [RequireComponent(typeof(Rigidbody))]
 public class Gravity3D : MonoBehaviour
 {
     public enum ERotationType {
-        NONE,
-        ROTATETOSOURCE,
-        SNAPTOSOURCE
+        NONE,   //do not rotate toward gravity source
+        ROTATETOSOURCE, //smoothly rotate to gravity source
+        SNAPTOSOURCE    //immediately snap rotation to gravity source
     }
 
     Rigidbody rb;
-    bool useGravity = false;
-    bool parentedOnPlanet = false;
-    public bool standingOnPlanet = false;
-    Transform currGravitySource;
-    float currGravityStrength = 1.0f;
-    public float weight = 1.0f;
+    bool useGravity = false;    //toggle for gravity
+    bool parentedOnPlanet = false;  //in proximity of planet and parented
+    public bool standingOnPlanet = false;   //grounded on the gravity source planet?
+    Transform currGravitySource;    //source of gravity this object is bound to
+    float currGravityStrength = 1.0f;   //gravity strength of the current source
+    public float weight = 1.0f; //gravity multiplier
 
     public ERotationType rotationType = ERotationType.NONE;
-    public float rotateTowardSourceSpeed = 3f;
+    public float rotateTowardSourceSpeed = 3f;  //speed of smooth rotating if rotationType is ROTATETOSOURCE
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
+        //set useGravity from the rb
         if (rb.useGravity) {
             rb.useGravity = false;
             useGravity = true;
@@ -41,6 +43,7 @@ public class Gravity3D : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        //landed on planet
         if (!parentedOnPlanet && other.gameObject.CompareTag("PlanetCollision"))
         {
             ArrivedAtSource();
@@ -49,6 +52,7 @@ public class Gravity3D : MonoBehaviour
 
     private void OnCollisionExit(Collision other)
     {
+        //not on planet's surface, but still in its gravity
         if (standingOnPlanet && other.gameObject.CompareTag("PlanetCollision"))
         {
             standingOnPlanet = false;
@@ -57,6 +61,7 @@ public class Gravity3D : MonoBehaviour
 
 
 
+    //entered a planet's gravity, hasn't landed yet
     public void EnteredGravitySource(Transform newSource, float newStrength)
     {
         if (!useGravity) {
@@ -73,6 +78,7 @@ public class Gravity3D : MonoBehaviour
 
 
 
+    //left a planet's gravity, no longer bound to that planet in any way
     public void LeftPlanetGravity() {
         if (!parentedOnPlanet) {
             return;
@@ -84,6 +90,8 @@ public class Gravity3D : MonoBehaviour
 
 
 
+    
+    //landed on the planet
     public void ArrivedAtSource()
     {
         if (!useGravity) {
@@ -101,6 +109,8 @@ public class Gravity3D : MonoBehaviour
     }
 
 
+
+    //apply gravity
     private void FixedUpdate()
     {
         if (!rb.isKinematic && useGravity) {  //no need to run these when kinematic
@@ -110,7 +120,7 @@ public class Gravity3D : MonoBehaviour
     }
 
 
-    
+    //apply 1 FixedUpdate frame of gravity
     void AddForceTowardSource()
     {
         Vector3 directionToSource = GetDirectionToSource();
@@ -121,6 +131,7 @@ public class Gravity3D : MonoBehaviour
 
 
 
+    //rotate toward gravity source according to rotationType
     public void RotateTowardSource()
     {
         if (rotationType != ERotationType.NONE)
@@ -133,6 +144,7 @@ public class Gravity3D : MonoBehaviour
 
             float rotSpeed;
 
+            //smooth rotation
             if (transform.parent == null && rotationType == ERotationType.ROTATETOSOURCE) {
                 rotSpeed = rotateTowardSourceSpeed * Time.fixedDeltaTime;
             }
@@ -142,13 +154,15 @@ public class Gravity3D : MonoBehaviour
                 rotSpeed = 1.0f;
             }
 
+            //actually rotate via Slerp
             Quaternion orientationDirection = Quaternion.FromToRotation(-transform.up, directionToSource) * transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotSpeed);
-            //transform.rotation = orientationDirection;
         }
     }
 
 
+
+    //returns direction from this object down towards the source of gravity
     public Vector3 GetDirectionToSource()
     {
         if (currGravitySource != null) {
@@ -160,21 +174,25 @@ public class Gravity3D : MonoBehaviour
 
 
 
+    //toggle gravity
     public void SetGravityActive(bool newActive) {
         useGravity = newActive;
         if (useGravity) {
 
+            //try to find the nearest gravity
             if (currGravitySource == null) {
                 GravitySource bestGuess = BestGuessGravitySource();
                 EnteredGravitySource(bestGuess.transform, bestGuess.sourceStrength);
             }
 
+        //leave any currently active gravity source
         } else {
             LeftPlanetGravity();
         }
     }
 
     //EXPENSIVE! Only call when necessary
+    //return the closest gravity source
     GravitySource BestGuessGravitySource() {
         GravitySource[] allSources = FindObjectsOfType<GravitySource>();
 
