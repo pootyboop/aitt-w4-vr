@@ -80,6 +80,10 @@
       "type": "vector1"
     },
     {
+      "name": "/actions/default/in/pause",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

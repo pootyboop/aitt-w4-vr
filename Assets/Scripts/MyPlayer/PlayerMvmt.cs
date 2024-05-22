@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using Valve.VR;
 
 public class PlayerMvmt : MonoBehaviour
@@ -10,12 +11,14 @@ public class PlayerMvmt : MonoBehaviour
     public static PlayerMvmt instance;
     public SteamVR_Action_Vector2 mvmtAction, snapTurnAction;
     public SteamVR_Action_Single rocketLAction, rocketRAction;
+    public SteamVR_Action_Boolean restartAction;
     public Transform cam;
     Rigidbody rb;
     Gravity3D gravity;
     IEnumerator ungroundedTimer;
     public SteamVR_Input_Sources handTypeL, handTypeR;
     public MyHand handL, handR;
+    public ParticleSystem rocketParticles;
     //======================
 
     //========VALUES========
@@ -28,12 +31,14 @@ public class PlayerMvmt : MonoBehaviour
     float canTurnEverySeconds = 0.5f;
     public bool airControl = false;
     public float maxVelocity = 500f;
+    public bool canRocket = true;
     public float rocketStrength = 2f;
     //======================
 
     //========STATE=========
     Vector3 desiredMvmtInput;
     bool isGrounded = false;
+    bool isRocketing = false;
     public static float teleportLastActiveTime = 0.0f;
     //======================
 
@@ -44,6 +49,7 @@ public class PlayerMvmt : MonoBehaviour
         instance = this;
         rb = GetComponent<Rigidbody>();
         gravity = GetComponent<Gravity3D>();
+        rocketParticles.Stop();
     }
 
 
@@ -66,13 +72,17 @@ public class PlayerMvmt : MonoBehaviour
 
         Move();
         CapSpeed();
+
+        if (restartAction.stateDown)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 
 
     void Move()
     {
-
         //air control
         if (!isGrounded && !airControl) {
             return;
@@ -89,6 +99,17 @@ public class PlayerMvmt : MonoBehaviour
 
         if (CanRocket()) {
             move += transform.up * rocketStrength;
+            if (!isRocketing)
+            {
+                isRocketing = true;
+                rocketParticles.Play();
+            }
+        }
+
+        else if (isRocketing)
+        {
+            isRocketing = false;
+            rocketParticles.Stop();
         }
 
         rb.AddForce(move);
@@ -99,7 +120,8 @@ public class PlayerMvmt : MonoBehaviour
     bool CanRocket() {
         return (
             rocketLAction.axis > 0.9f &&
-            rocketRAction.axis > 0.9f /*&&
+            rocketRAction.axis > 0.9f &&
+            canRocket/*&&
             !handL.IsHoldingObject() &&
             !handR.IsHoldingObject()*/
             );
