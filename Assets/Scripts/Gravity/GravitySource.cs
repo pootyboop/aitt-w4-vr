@@ -30,7 +30,7 @@ public class GravitySource : MonoBehaviour
         if (currGravity3D != null)
         {
             //tell the object it exited this gravity source
-            currGravity3D.LeftPlanetGravity();
+            currGravity3D.ExitedGravitySource();
         }
         
     }

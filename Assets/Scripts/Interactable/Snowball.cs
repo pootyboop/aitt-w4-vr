@@ -42,7 +42,8 @@ public class Snowball : MonoBehaviour
     //check if the snowball should grow
     void FixedUpdate()
     {
-        float mvmt = Vector3.Distance(transform.position, lastGrowPos); //check distance from last position it "grew" at
+        //check distance from last position it "grew" at
+        float mvmt = Vector3.Distance(transform.position, lastGrowPos);
 
         //grow if able to
         if (

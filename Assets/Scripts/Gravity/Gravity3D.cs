@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
+/**
+* This script includes two lines from a YouTube tutorial.
+*
+* Author: Bit Galaxis
+* Location: https://youtu.be/v4gkheo0dt8?si=iv0_cxPh2iBdbwCP&t=1256
+* Accessed: 29/04/2024
+*/
+
 //use with rigidbody to 3D-ify gravity using GravitySources
 [RequireComponent(typeof(Rigidbody))]
 public class Gravity3D : MonoBehaviour
@@ -55,7 +63,7 @@ public class Gravity3D : MonoBehaviour
         //not on planet's surface, but still in its gravity
         if (standingOnPlanet && other.gameObject.CompareTag("PlanetCollision"))
         {
-            standingOnPlanet = false;
+            LeftFromSource();
         }
     }
 
@@ -79,7 +87,7 @@ public class Gravity3D : MonoBehaviour
 
 
     //left a planet's gravity, no longer bound to that planet in any way
-    public void LeftPlanetGravity() {
+    public void ExitedGravitySource() {
         if (!parentedOnPlanet) {
             return;
         }
@@ -106,6 +114,13 @@ public class Gravity3D : MonoBehaviour
         parentedOnPlanet = true;
         standingOnPlanet = true;
         transform.SetParent(currGravitySource);
+    }
+
+
+
+    //no longer physically on the planet
+    void LeftFromSource() {
+        standingOnPlanet = false;
     }
 
 
@@ -137,11 +152,6 @@ public class Gravity3D : MonoBehaviour
         if (rotationType != ERotationType.NONE)
         {
             Vector3 directionToSource = GetDirectionToSource();
-
-            //
-            //https://www.youtube.com/watch?v=v4gkheo0dt8
-            //
-
             float rotSpeed;
 
             //smooth rotation
@@ -155,8 +165,11 @@ public class Gravity3D : MonoBehaviour
             }
 
             //actually rotate via Slerp
+
+            //Bit Galaxis' code begins here ===================================================================================
             Quaternion orientationDirection = Quaternion.FromToRotation(-transform.up, directionToSource) * transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, orientationDirection, rotSpeed);
+            //Bit Galaxis' code ends here =====================================================================================
         }
     }
 
@@ -187,7 +200,7 @@ public class Gravity3D : MonoBehaviour
 
         //leave any currently active gravity source
         } else {
-            LeftPlanetGravity();
+            ExitedGravitySource();
         }
     }
 

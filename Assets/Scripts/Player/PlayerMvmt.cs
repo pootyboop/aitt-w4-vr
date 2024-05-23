@@ -149,7 +149,9 @@ public class PlayerMvmt : MonoBehaviour
         //get direction to gravity (down towards player's feet)
         Vector3 gravDir = gravity.GetDirectionToSource().normalized;
 
-        //project cam direction onto the gravity direction, making it perpendicular to the gravity force direction and ensuring player won't move up/down when looking up/down
+        //project cam direction onto the gravity direction
+        //making it perpendicular to the gravity force direction
+        //and ensuring player won't move up/down when looking up/down
         return camDir - Vector3.Project(camDir, gravDir);
     }
 
