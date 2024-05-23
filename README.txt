@@ -1,6 +1,6 @@
 ================== OVERVIEW ==================
 This submission includes an executable VR experience, a Unity project, and a video playthrough of the experience.
-Use a Vive headset in the VR lab for this experience. SteamVR should launch on its own when running the executable, but if it doesn't, start it first.
+Use a Vive headset in the VR lab for this experience. SteamVR should launch on its own when running the executable, but if it doesn't, quit the application and start SteamVR first.
 The video playthrough is intended to be a backup in case the executable fails to launch or input is not working.
 The experience includes navigable 3D planets which may cause nausea.
 
